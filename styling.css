@@ -1,0 +1,550 @@
+/* Navigation bar*/
+.topnav {
+    top: 0;
+    margin: 0;
+    /*padding: 0;
+    margin-bottom: 20px;*/
+    overflow: hidden;
+    background-color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    position: fixed;
+    width: 100%;
+}
+
+.topnav a {
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    float: left;
+}
+
+.topnav a:hover {
+    background-color: #DDDDDD;
+    color: black;
+}
+
+.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.topnav .icon {
+    display: none;
+}
+
+nav #navRightFloat {
+    float: right;
+}
+
+@media screen and (max-width: 510px) {
+    .topnav a:not(:first-child) {display: none;}
+    .topnav a.icon {
+        float: right;
+        display: block;
+    }
+    nav #navRightFloat {
+      float: left;
+      clear: both;
+      width: 100%;
+    }
+}
+
+@media screen and (max-width: 510px) {
+    .topnav.responsive {
+      position: fixed;
+    }
+    .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    }
+    .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+    }
+    .topnav.responsive nav #navRightFloat {
+        display: block;
+    }
+}/*End of navigation bar styling*/
+
+/* Inputs */
+input[type=email], input[type=password], input[type=name], input[type=PSN], input[type=text], input[type=number] {
+	width: 98%;
+	padding: 12px 4px;
+	margin: 0px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	display: inline-block;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+/* General button */
+button {
+	background-color: #4CAF50;
+	color: solid black;
+	padding: 12px 0px;
+	margin: 0px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	border: 1px solid black;
+	border-radius: 10px;
+	cursor: pointer;
+	width: 98%;
+	font-family: Arial, Helvetica, sans-serif
+}
+
+/* Cancel button */
+.cancelbtn {
+    width: 48%;
+    padding: 12px 0px;
+    background-color: #f44336;
+}
+
+/* Add product button */
+.addproductbtn {
+	width: 48%;
+    padding: 12px 0px;
+    background-color: #4CAF50;
+	margin-right: 1%;
+}
+
+.addproductbtn.mark-order-sent {
+    width: 100%;
+}
+
+/* Button for admin layout */
+.button-admin {
+	background-color: #4CAF50;
+	color: solid black;
+	margin: 2.5%;
+	margin-top: 1%;
+	border: 1px solid black;
+	cursor: pointer;
+	width: 28%;
+	font-family: Arial, Helvetica, sans-serif
+    float: left;
+}
+
+.modal-add-comment-button {
+    background-color: #008CBA;
+    width: 95%;
+    margin-top: 1%;
+    margin-left: 2.25%;
+    margin-right: 2.25%;
+    margin-bottom: 0%;
+}
+
+.modal-add-comment-button.cancel-modal {
+    background-color: #F44336;
+    margin-bottom: 1%;
+}
+
+.admin-button-container {
+    clear: both;
+}/* ----------STOP BUTTON-----------*/
+
+.container {
+	padding: 16px;
+}
+/* Login and register box */
+.login-box {
+	background-color: white;
+	margin: 5% auto; /* 5% from the top centered */
+	border: 2px solid #888888;
+	border-radius: 15px;
+	width: 30%; /* Could be more or less, depending on screen size */
+	font-family: Arial, Helvetica, sans-serif;
+	min-width: 300px;
+	max-width: 350px;
+    margin-top: 10%;
+}
+
+/* PRODUCT START */
+/* "Shop" container */
+.product-box {
+	background-color: white;
+	margin: 0 auto;
+	margin-top: 10%;
+	/*border: 1px solid #888888;*/
+    max-width: 1400px;
+	width: 80%;
+	height: 80% auto;
+	max-width: 1400px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Individual product boxes in "shop"*/
+.product-container {
+	cursor: pointer;
+    padding-bottom: 2%;
+	border: 1px solid #888888;
+	background-color: #FFFFFF;
+	width: 33.33%;
+	height: 60%;
+	display: inline-block;
+	margin-bottom: 0;
+	font-family: Arial, Helvetica, sans-serif;
+    float: left;
+}
+
+/* Product image container */
+.product-image-container {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5%;
+    margin-bottom: 2%;
+	width: 70%;
+	height: 50%;
+}
+
+/* Image */
+img {
+	display: block;
+	margin: auto;
+	width: 100%;
+	height: 100%;
+}
+
+/* Product in "shop" container */
+.product-text-container {
+	margin-left: 7%;
+	margin-right: 7%;
+	margin-top: 1%;
+    margin-bottom: 1%;
+	width: 86%;
+	height: 5%;
+}
+
+/* Product in "shop" container */
+.product-text-description-container {
+	margin-left: 7%;
+	margin-right: 7%;
+	margin-top: 1%;
+    margin-bottom: 1%;
+	width: 86%;
+	height: 5%;
+    overflow-x: scroll;
+}
+
+@media screen and (max-width: 800px) {
+    .product-container {
+        width: 50%;
+        font-size: 14px;
+    }
+}
+
+/* Admin input containers */
+.admin-product-settings {
+	background-color: white;
+	margin: 1% auto; /* 5% from the top centered */
+	width: 80%; /* Could be more or less, depending on screen size */
+	height: 5%;
+	font-family: Arial, Helvetica, sans-serif;
+    clear: both;
+} /*------------------ PRODUCT END----------------------- */
+
+/* ------------------MODAL START------------------------- */
+/* Modal popup */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+	background-color: white;
+	margin: 5% auto; /* 5% from the top centered */
+	border: 2px solid #888;
+	width: 30%; /* Could be more or less, depending on screen size */
+	min-width: 300px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Image in modal */
+.modal-image-container {
+	margin: 2.25%;
+	margin-right:0;
+	width: 50%;
+	height: 30%;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+/* Info in modal */
+.modal-info-container {
+	margin: 2.25%;
+	margin-right:0;
+	width: 42%;
+	height: 30%;
+	font-family: Arial, Helvetica, sans-serif;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+@media screen and (max-width: 1200px) {
+    .modal-info-container {
+        font-size: 14px;
+    }
+}
+
+/* Info text within modal-info-container */
+.info {
+	margin-top:5%;
+	margin-left: 5%;
+}
+
+.modal-product-header {
+    display: block;
+    margin-top: 2.5%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* Comment and rating container */
+.modal-rating-container {
+	margin: 2.25%;
+	margin-top: 5%;
+	width: 95%;
+	height: 30%;
+	font-family: Arial, Helvetica, sans-serif;
+	border: 1px solid black;
+	vertical-align: middle;
+    word-wrap: break-word;
+	overflow: auto;
+}
+
+/* Product modal container */
+.modal-content-product {
+	background-color: white;
+	margin: 5% auto; /* 5% from the top centered */
+	border: 2px solid #888;
+	border-radius: 10px;
+	width: 30%; /* Could be more or less, depending on screen size */
+	min-width: 300px;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-bottom: 0%;
+}/* ----------------------MODAL END------------------------- */
+
+/* ---------------------SHOPPING CART / ORDERS------------- */
+/* Shopping cart page container */
+.cart-box {
+	width: 60%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 5%;
+	border: 1px solid #888888;
+	background-color: #FFFFFF;
+	padding: 1%;
+    min-width: 300px;
+}
+
+.order-box {
+    width: 60%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 5%;
+    border: 1px solid #888888;
+    background-color: #FFFFFF;
+    padding: 1%;
+    min-width: 350px;
+
+}
+
+/* Shopping cart title */
+.cart-title {
+	height: 10%;
+	width: 100%;
+	border-bottom: 1px solid black;
+}
+
+/* General cart/orders table data */
+.cart-box-data {
+	height: 90% auto;
+	overflow: auto;
+	color: black;
+}
+
+/* table specific */
+.cart-box-data table {
+	width: 100%;
+	border-collapse: collapse;
+	font-weight: 100;
+}
+
+/* Table head specific */
+.cart-box-data th {
+	text-align: left;
+	padding: 12px;
+	font-weight: 100;
+}
+
+/* Table footer specific */
+.cart-box-data tfoot {
+	text-align: right;
+	width: 100%;
+	height: 10%;
+	background-color: white;
+	border-bottom: none;
+}
+
+/* Cart footer */
+.cart-footer {
+	width:100%;
+	height: 10% auto;
+}
+
+/* Add item to cart button */
+.btn-add-to-cart {
+	font-family: Arial, Helvetica, sans-serif;
+  	background: #4CAF50;
+  	padding: 5px;
+  	color: black;
+  	font-size: 12px;
+  	cursor: pointer;
+  	display: inline;
+  	font-weight: normal;
+  	border: 1px solid black;
+    border-radius: 5px;
+	margin-top: 2px;
+	width: 98%;
+}
+
+.btn-add-to-cart.remove-comment {
+    width: 20%;
+    margin-top: 0;
+    margin-bottom: 2%;
+    margin-left: 5%;
+    background-color: #F44336;
+}
+
+/* Table body specifics */
+.cart-box-data td {
+	text-align: left;
+	padding: 2%;
+	font-weight: 100;
+	border-bottom: 1px solid black;
+}
+
+@media screen and (max-width: 500px) {
+    .cart-box-data td, tbody, thead h2, thead h3, tfoot {
+        font-size: 10px;
+    }
+}
+
+/* Button for changes within in the cart */
+.btn-cart-change {
+	background-color: #4CAF50;
+	color: solid black;
+	border: 1px solid black;
+	cursor: pointer;
+	width: 10%;
+	height: 2%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Total of cost of cart */
+#total {
+	text-align: right;
+} /* --------------SHOPPING CART / ORDER END---------*/
+
+/* Everywhere */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+table {
+	display: table;
+	border-color: black;
+	border-spacing: 2px;
+}
+
+tbody, thead {
+	display: table-row-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+
+tr {
+	display: table-row;
+	vertical-align: inherit;
+	border-color: inherit;
+}
+
+div {
+	display: block;
+}
+
+.images {
+	display:none
+}
+
+/* Slideshow container */
+.slideshow-container {
+	width: 40%;
+	height: 65%;
+  	position: relative;
+	margin-right: auto;
+	margin-left: auto;
+ 	margin-top: 10%;
+	margin-bottom: 0;
+	padding: 2%;
+	z-index: -1;
+}
+
+
+/* Text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* The which indicate which slide is showing */
+.dot {
+  height: 13px;
+  width: 13px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active {
+  background-color: #717171;
+}
+
+/* Comment section */
+.comment {
+	width: 95%;
+	margin: 2.25% auto;
+	font-family: Arial, Helvetica, sans-serif;
+  	border: 1px solid black;
+}
+
+@media screen and (max-width: 600px) {
+    .login-box, .register-box, .product-box, .slideshow-container, .cart-box, .order-box {
+        margin-top: 20%;
+    }
+}
