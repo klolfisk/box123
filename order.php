@@ -36,7 +36,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="styling.css">
+	<link rel="stylesheet" type="text/css" href="css/styling.css">
 	<title>Box123 - Orders</title>
 </head>
 <body>

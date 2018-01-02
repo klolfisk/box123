@@ -120,8 +120,8 @@ header("Content-Type: text/html; charset=ISO-8859-1");
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="styling.css">
 	<title>Box123 - Shopping cart</title>
+	<link rel="stylesheet" type="text/css" href="css/styling.css">
 </head>
 <body>
 

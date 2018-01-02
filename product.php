@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title> Box123 - Products </title>
-	<link rel="stylesheet" type="text/css" href="styling.css">
+	<link rel="stylesheet" type="text/css" href="css/styling.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 <?php
