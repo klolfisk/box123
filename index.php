@@ -9,8 +9,13 @@
 <html>
 <head>
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
 	 <title> Box123 </title>
 	 <link rel="stylesheet" type="text/css" href="css/styling.css">
+=======
+	 <title>Box123</title>
+	 <link rel="stylesheet" type="text/css" href="styling.css">
+>>>>>>> acb038b1558b0f6da04933d8302880a2646e9f52
 </head>
 <body>
 	<div class="slideshow-container" >
@@ -41,25 +46,25 @@
 
 <!-- script for slideshow -->
 <script>
-  var slideIndex = 0;
-  slideshow();
+ 	var slideIndex = 0;
+	slideshow();
 
-  function slideshow() {
-      var i;
-      var slides = document.getElementsByClassName("images");
-      var dots = document.getElementsByClassName("dot");
-      for (i = 0; i < slides.length; i++) {
-         slides[i].style.display = "none";
-      }
-      slideIndex++;
-      if (slideIndex> slides.length) {slideIndex = 1}
-      for (i = 0; i < dots.length; i++) {
-          dots[i].className = dots[i].className.replace(" active", "");
-      }
-      slides[slideIndex-1].style.display = "block";
-      dots[slideIndex-1].className += " active";
-      setTimeout(slideshow, 2000); // Change image every 2 seconds
-  }
+	function slideshow() {
+		var i;
+  		var slides = document.getElementsByClassName("images");
+      	var dots = document.getElementsByClassName("dot");
+      	for (i = 0; i < slides.length; i++) {
+        	slides[i].style.display = "none";
+      	}
+      	slideIndex++;
+      	if (slideIndex> slides.length) {slideIndex = 1}
+      	for (i = 0; i < dots.length; i++) {
+          	dots[i].className = dots[i].className.replace(" active", "");
+      	}
+      	slides[slideIndex-1].style.display = "block";
+      	dots[slideIndex-1].className += " active";
+      	setTimeout(slideshow, 2000); // Change image every 2 seconds
+  	}
 </script>
 </body>
 </html>
