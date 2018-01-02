@@ -1,9 +1,8 @@
 <?php
-// Allows swedish letters to be displayed
-ob_start();
-session_start();
-require_once 'dbconnect.php';
-include_once("navigation.php");
+	ob_start();
+	session_start();
+	require_once 'dbconnect.php';
+	include_once("navigation.php");
 
 	// if admin presses the add product button
 	if (isset($_POST['btn-add'])) {

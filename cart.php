@@ -1,9 +1,8 @@
 <?php
-ob_start();
-session_start();
-require_once 'dbconnect.php';
-include_once("navigation.php");
-header("Content-Type: text/html; charset=ISO-8859-1");
+	ob_start();
+	session_start();
+	require_once 'dbconnect.php';
+	include_once("navigation.php");
 
 	// function for printing the list of items added to cart
 	function create_cart_list($productid, $price, $quantity, $productname ) { ?>
