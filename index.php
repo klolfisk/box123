@@ -8,14 +8,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-	 <title> Box123 </title>
-	 <link rel="stylesheet" type="text/css" href="css/styling.css">
-=======
-	 <title>Box123</title>
-	 <link rel="stylesheet" type="text/css" href="styling.css">
->>>>>>> acb038b1558b0f6da04933d8302880a2646e9f52
+	<title> Box123 </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/styling.css">
 </head>
 <body>
 	<div class="slideshow-container" >
@@ -44,7 +39,7 @@
 	    <span class="dot"></span>
 	</div>
 
-<!-- script for slideshow -->
+<!-- script for box slideshow -->
 <script>
  	var slideIndex = 0;
 	slideshow();
