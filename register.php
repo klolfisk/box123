@@ -58,41 +58,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="css/styling.css">
-<meta http-equiv="Content-Type" content="text/html; charset=ANSI" />
-<title>Box123 - Registration</title>
+	<title>Box123 - Registration</title>
+	<link rel="stylesheet" type="text/css" href="css/styling.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=ANSI" />
 </head>
 
 <body>
-<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
-	<div class="login-box">
-		<div class="container">
-			<!-- Get inputs for registration -->
-			<label><b>Name</b></label>
-			<input type="Name" name="Name" placeholder="Enter your name (ex. John Doe)" maxlength="45" value="<?php echo $Name; ?>" pattern="[a-zA-Z\s]+" title="Förnamn och efternamn" required>
+	<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
+		<div class="login-box">
+			<div class="container">
+				<!-- Get inputs for registration -->
+				<label><b>Name</b></label>
+				<input type="Name" name="Name" placeholder="Enter your name (ex. John Doe)" maxlength="45" value="<?php echo $Name; ?>" pattern="[a-zA-Z\s]+" title="Förnamn och efternamn" required>
 
-			<label><b>Personal number</b></label>
-			<input type="PSN" name="PSN" placeholder="Enter in format (YYYYMMDDXXXX)" maxlength="45" value="<?php echo $PSN; ?>" pattern="[0-9]{12}" title="YYYYMMDDXXXX" required>
+				<label><b>Personal number</b></label>
+				<input type="PSN" name="PSN" placeholder="Enter in format (YYYYMMDDXXXX)" maxlength="45" value="<?php echo $PSN; ?>" pattern="[0-9]{12}" title="YYYYMMDDXXXX" required>
 
-			<label><b>Email</b></label>
-			<input type="Email" name="Email" placeholder="Enter your email" maxlength="45" value="<?php echo $Email; ?>" pattern="[a-z0-9A-Z._%+-]+@[a-z0-9A-Z.-]+\.[a-z]{2,3}$" title="Example@example.com" required>
+				<label><b>Email</b></label>
+				<input type="Email" name="Email" placeholder="Enter your email" maxlength="45" value="<?php echo $Email; ?>" pattern="[a-z0-9A-Z._%+-]+@[a-z0-9A-Z.-]+\.[a-z]{2,3}$" title="Example@example.com" required>
 
-      			<label><b>Password</b></label>
-			<input type="Password" name="Password" placeholder="Enter your password" maxlength="45" value="<?php echo $Password; ?>" pattern="[a-z0-9A-Z]+" title="Kan bara innehålla små, stora bokstäver samt siffror." required>
-			<!-- submit registration inputs if register button is pressed -->
-			<button type="submit" class="button" name="btn-register">Register</button>
-            		<p>Already registered? <a href="login.php">Log in here!</a></p>
+	      			<label><b>Password</b></label>
+				<input type="Password" name="Password" placeholder="Enter your password" maxlength="45" value="<?php echo $Password; ?>" pattern="[a-z0-9A-Z]+" title="Kan bara innehålla små, stora bokstäver samt siffror." required>
+				<!-- submit registration inputs if register button is pressed -->
+				<button type="submit" class="button" name="btn-register">Register</button>
+	            <p>Already registered? <a href="login.php">Log in here!</a></p>
+			</div>
+
+			<!-- echo registerError if successful registartion or if not successful -->
+			<div class="container">
+	   		<?php if (isset($registerError) ) {
+				echo $registerError;
+	   		} ?>
+			</div>
 		</div>
-
-		<!-- echo registerError if successful registartion or if not successful -->
-		<div class="container">
-   		<?php if (isset($registerError) ) {
-			echo $registerError;
-   		} ?>
-		</div>
-	</div>
-</form>
-
+	</form>
 </body>
 </html>
 <?php ob_end_flush(); ?>

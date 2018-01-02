@@ -123,92 +123,89 @@ header("Content-Type: text/html; charset=ISO-8859-1");
 	<title>Box123 - Shopping cart</title>
 	<link rel="stylesheet" type="text/css" href="css/styling.css">
 </head>
+
 <body>
+	<div class="cart-box">
+		<div class="cart-title">
+			<h1>Shopping cart</h1>
+		</div>
+		<div class="cart-box-data">
+			<table>
+				<thead>
+					<tr>
+						<th><h2>Product name</h2></th>
+						<th><h2>Product ID</h2></th>
+						<th><h2>Amount</h2></th>
+						<th><h2>Price</h2></th>
+					</tr>
+				</thead>
 
-<div class="cart-box">
-	<div class="cart-title">
-		<h1>Shopping cart</h1>
+				<tbody>
+					<?php
+					/* get data for printing the cart list */
+					$user = $_SESSION['user'];
+					$cartid = mysqli_query($link, "SELECT CartID FROM Cart WHERE User_UserPSN ='$user'");
+					$Row = mysqli_fetch_array($cartid, MYSQLI_ASSOC);
+					$cartid = $Row['CartID'];
+					$cartitems = mysqli_query($link, "SELECT Product_ProductID, CartItemQuantity, CartItemPrice FROM CartItem WHERE Cart_CartID = '$cartid'");
+
+					/* print all the items in the cart */
+					if (mysqli_num_rows($cartitems) > 0) {
+	    						while ($Row = mysqli_fetch_array($cartitems, MYSQLI_ASSOC)) {
+									$productid = $Row['Product_ProductID'];
+									$productname = mysqli_query($link, "SELECT ProductName FROM Product WHERE ProductID = '$productid'");
+									$Row2 = mysqli_fetch_array($productname);
+									create_cart_list($Row['Product_ProductID'],$Row['CartItemPrice'],$Row['CartItemQuantity'], $Row2['ProductName']);
+									$total = $Row['CartItemPrice'] + $total;
+								}
+					} ?>
+				</tbody>
+
+				<tfoot>
+	    			<tr>
+	      				<th class="right" colspan="3"><h3>Total price:</h3></th><th class="right"><?php echo $total ?></th>
+	    			</tr>
+	   			</tfoot>
+			</table>
+		</div>
+		<?php
+			$user = $_SESSION['user'];
+			$cartcheck = mysqli_query($link, "SELECT CartID FROM Cart WHERE User_UserPSN = '$user'");
+			$CartRow = mysqli_fetch_array($cartcheck, MYSQLI_ASSOC);
+			$cartid = $CartRow['CartID'];
+			$cartitems = mysqli_query($link, "SELECT CartItemID FROM CartItem WHERE Cart_CartID = '$cartid'");
+
+			/* check if items in cart, and disaply buttons if true */
+			if (mysqli_num_rows($cartitems) > 0) { ?>
+				<div class="cart-footer">
+					<button onclick="document.getElementById('id05').style.display='block'" class="addproductbtn" name="btn-add-product" style="width: 100%">Place order</button>
+					<form method="post" action="">
+						<input type="hidden" name="user" value="<?php echo $user?>">
+						<button name="cleancartbtn" type="submit" class="cancelbtn" style="width: 100%">Clear shopping cart</button>
+					</form>
+				</div>
+			<?php } ?>
+
+		<!-- Order modal, takes inputs for orders -->
+		<div id="id05" class="modal">
+			<form method="post" class="modal-content" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
+	    		<div class="container">
+	      			<label><b>Address:</b></label>
+	      			<input type="text" placeholder="Skriv in adress" name="OrderShipAddress" value="<?php echo $shipaddress; ?>" pattern="[a-ö0-9A-Ö\s]+" title="Kan bara innehålla små, stora bokstäver samt siffror." required>
+
+	      			<label><b>Zip code:</b></label>
+	      			<input type="text" placeholder="Skriv in zip kod" name="OrderZip" value="<?php echo $zip; ?>"  pattern="[0-9]{5}" required>
+
+	      			<label><b>City:</b></label>
+	      			<input type="text" placeholder="Skriv in ort" name="OrderCity" value="<?php echo $city; ?>" pattern="[a-zA-Z\s]+" required>
+
+	      				<!-- order button -->
+	      			<button type="submit" name="btn-order" class="addproductbtn">Place order</button>
+					<button type="button" onclick="document.getElementById('id05').style.display='none'" class="cancelbtn">Cancel</button>
+	    		</div>
+	  		</form>
+		</div>
 	</div>
-	<div class="cart-box-data">
-		<table>
-			<thead>
-				<tr>
-					<th><h2>Product name</h2></th>
-					<th><h2>Product ID</h2></th>
-					<th><h2>Amount</h2></th>
-					<th><h2>Price</h2></th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<?php
-				/* get data for printing the cart list */
-				$user = $_SESSION['user'];
-				$cartid = mysqli_query($link, "SELECT CartID FROM Cart WHERE User_UserPSN ='$user'");
-				$Row = mysqli_fetch_array($cartid, MYSQLI_ASSOC);
-				$cartid = $Row['CartID'];
-				$cartitems = mysqli_query($link, "SELECT Product_ProductID, CartItemQuantity, CartItemPrice FROM CartItem WHERE Cart_CartID = '$cartid'");
-
-				/* print all the items in the cart */
-				if (mysqli_num_rows($cartitems) > 0) {
-    						while ($Row = mysqli_fetch_array($cartitems, MYSQLI_ASSOC)) {
-								$productid = $Row['Product_ProductID'];
-								$productname = mysqli_query($link, "SELECT ProductName FROM Product WHERE ProductID = '$productid'");
-								$Row2 = mysqli_fetch_array($productname);
-								create_cart_list($Row['Product_ProductID'],$Row['CartItemPrice'],$Row['CartItemQuantity'], $Row2['ProductName']);
-								$total = $Row['CartItemPrice'] + $total;
-							}
-				} ?>
-			</tbody>
-
-			<tfoot>
-    			<tr>
-      				<th class="right" colspan="3"><h3>Total price:</h3></th><th class="right"><?php echo $total ?></th>
-    			</tr>
-   			</tfoot>
-		</table>
-	</div>
-	<?php
-		$user = $_SESSION['user'];
-		$cartcheck = mysqli_query($link, "SELECT CartID FROM Cart WHERE User_UserPSN = '$user'");
-		$CartRow = mysqli_fetch_array($cartcheck, MYSQLI_ASSOC);
-		$cartid = $CartRow['CartID'];
-		$cartitems = mysqli_query($link, "SELECT CartItemID FROM CartItem WHERE Cart_CartID = '$cartid'");
-
-		/* check if items in cart, and disaply buttons if true */
-		if (mysqli_num_rows($cartitems) > 0) { ?>
-			<div class="cart-footer">
-
-				<button onclick="document.getElementById('id05').style.display='block'" class="addproductbtn" name="btn-add-product" style="width: 100%">Place order</button>
-				<form method="post" action="">
-					<input type="hidden" name="user" value="<?php echo $user?>">
-					<button name="cleancartbtn" type="submit" class="cancelbtn" style="width: 100%">Clear shopping cart</button>
-				</form>
-			</div>
-		<?php } ?>
-
-	<!-- Order modal, takes inputs for orders -->
-	<div id="id05" class="modal">
-		<form method="post" class="modal-content" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
-    			<div class="container">
-      				<label><b>Address:</b></label>
-      				<input type="text" placeholder="Skriv in adress" name="OrderShipAddress" value="<?php echo $shipaddress; ?>" pattern="[a-ö0-9A-Ö\s]+" title="Kan bara innehålla små, stora bokstäver samt siffror." required>
-
-      				<label><b>Zip code:</b></label>
-      				<input type="text" placeholder="Skriv in zip kod" name="OrderZip" value="<?php echo $zip; ?>"  pattern="[0-9]{5}" required>
-
-      				<label><b>City:</b></label>
-      				<input type="text" placeholder="Skriv in ort" name="OrderCity" value="<?php echo $city; ?>" pattern="[a-zA-Z\s]+" required>
-
-      				<!-- order button -->
-      				<button type="submit" name="btn-order" class="addproductbtn">Place order</button>
-				<button type="button" onclick="document.getElementById('id05').style.display='none'" class="cancelbtn">Cancel</button>
-    			</div>
-  		</form>
-	</div>
-
-</div>
-
 </body>
 
 <script>

@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="css/navigation_bar.css">
 </head>
+
 <body>
 	<nav class="topnav" id="topNavBar">
 		<!-- Navigation bar if NOT logged in -->
@@ -25,6 +26,7 @@
 			<a class="icon" href="javascript:void(0);" style="font-size:15px;" onclick="topNavResponsive()">&#9776;</a>
 		<?php } ?>
 	</nav>
+</body>
 
 <script>
 function topNavResponsive() {
@@ -37,5 +39,4 @@ function topNavResponsive() {
 }
 </script>
 
-</body>
 </html>

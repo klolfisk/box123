@@ -40,39 +40,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="css/styling.css">
-<meta http-equiv="Content-Type" content="text/html; charset=ANSI" />
-<title>Box123 - Log in</title>
+	<title>Box123 - Log in</title>
+	<link rel="stylesheet" type="text/css" href="css/styling.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=ANSI" />
 </head>
 
 <body>
+	<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
+		<div class="login-box">
+			<div class="container">
+				<label><b>Email</b></label>
+				<input type="Email" name="Email" placeholder="Enter your email" maxlength="45" value="<?php echo $Email; ?>" pattern="[a-z0-9A-Z._%+-]+@[a-z0-9A-Z.-]+\.[a-z]{2,3}$" title="Example@example.com" required>
 
-<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
+	      		<label><b>Password</b></label>
+				<input type="Password" name="Password" placeholder="Enter your password" maxlength="45" required>
 
-	<div class="login-box">
-		<div class="container">
-			<label><b>Email</b></label>
-			<input type="Email" name="Email" placeholder="Enter your email" maxlength="45" value="<?php echo $Email; ?>" pattern="[a-z0-9A-Z._%+-]+@[a-z0-9A-Z.-]+\.[a-z]{2,3}$" title="Example@example.com" required>
+				<button type="submit" class="button" name="btn-login">Log in</button>
+	            <p>Not registered? <a href="register.php">Register here!</a></p>
+			</div>
 
-      		<label><b>Password</b></label>
-			<input type="Password" name="Password" placeholder="Enter your password" maxlength="45" required>
-
-			<button type="submit" class="button" name="btn-login">Log in</button>
-            		<p>Not registered? <a href="register.php">Register here!</a></p>
+			<div class="container">
+			   	<?php
+			   	if (isset($loginErrorFail)) {
+					echo $loginErrorFail;
+			   	} elseif (isset($loginErrorSuccess)) {
+					echo $loginErrorSuccess;
+				}
+			   	?>
+			</div>
 		</div>
-
-		<div class="container">
-		   	<?php
-		   	if (isset($loginErrorFail)) {
-				echo $loginErrorFail;
-		   	} elseif (isset($loginErrorSuccess)) {
-				echo $loginErrorSuccess;
-			}
-		   	?>
-		</div>
-	</div>
-</form>
-
+	</form>
 </body>
 </html>
 <?php ob_end_flush(); ?>
