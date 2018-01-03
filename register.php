@@ -1,57 +1,56 @@
 <?php
 	ob_start();
 	session_start();
+	include_once("dbconnect.php");
+	include_once("navigation.php");
 
 	/* Check if a user is already logged in
 	if a user is logged in send to home */
 	if ( isset($_SESSION[ 'user'])!="") {
 		header("Location: index.php");
 	}
-	include_once 'dbconnect.php';
-	include_once("navigation.php");
 
 	// If register button is pressed, register the user
 	if (isset($_POST['btn-register'])) {
 
-			// clean user inputs to prevent sql injection, by using trim, strip_tags and htmlspecialchar
-			$Name = trim($_POST['Name']);
-			$Name = strip_tags($Name);
-			$Name = htmlspecialchars($Name);
+		// clean user inputs to prevent sql injection, by using trim, strip_tags and htmlspecialchar
+		$Name = trim($_POST['Name']);
+		$Name = strip_tags($Name);
+		$Name = htmlspecialchars($Name);
 
-			$PSN = trim($_POST['PSN']);
-			$PSN = strip_tags($PSN);
-			$PSN = htmlspecialchars($PSN);
+		$PSN = trim($_POST['PSN']);
+		$PSN = strip_tags($PSN);
+		$PSN = htmlspecialchars($PSN);
 
-			$Email = trim($_POST['Email']);
-			$Email = strip_tags($Email);
-			$Email = htmlspecialchars($Email);
+		$Email = trim($_POST['Email']);
+		$Email = strip_tags($Email);
+		$Email = htmlspecialchars($Email);
 
-			$Password = trim($_POST['Password']);
-			$Password = strip_tags($Password);
-			$Password = htmlspecialchars($Password);
+		$Password = trim($_POST['Password']);
+		$Password = strip_tags($Password);
+		$Password = htmlspecialchars($Password);
 
-			// create an user and cart in the database
-			$query = "INSERT INTO User(UserName, UserPSN, UserEmail, UserPassword) VALUES('$Name','$PSN','$Email','$Password')";
-			$query2 = "INSERT INTO Cart(User_UserPSN) VALUES('$PSN')";
-			//$result2 = mysqli_query($link, $query2);
-			//$link2 = $link;
-			$result = mysqli_query($link, $query);
-			$result2 = mysqli_query($link, $query2);
+		// create an user and cart in the database
+		$query = "INSERT INTO User(UserName, UserPSN, UserEmail, UserPassword) VALUES('$Name','$PSN','$Email','$Password')";
+		$query2 = "INSERT INTO Cart(User_UserPSN) VALUES('$PSN')";
 
-			// Check if insertion was succesful
-			if ($result && $result2) {
-				$errorType = "Success";
+		$result = mysqli_query(connectionToDB(), $query);
+		$result2 = mysqli_query(connectionToDB(), $query2);
+
+		// Check if insertion was succesful
+		if ($result && $result2) {
+			$errorType = "Success";
 				//$registerError = "Registrering lyckades";
-				$registerError = '<script type="text/javascript">alert("Registration successful, you can now login!");</script>';
-				unset($Name);;
-				unset($PSN);
-				unset($Email);
-				unset($Password);
-			} else {
-				$errorType = "Danger";
-				//$registerError = "Något gick fel, vänligen försök igen";
-				$regsiterError = '<script type="text/javascript">alert("Registration failed, please try again!");</script>';
-			}
+			$registerError = '<script type="text/javascript">alert("Registration successful, you can now login!");</script>';
+			unset($Name);;
+			unset($PSN);
+			unset($Email);
+			unset($Password);
+		} else {
+			$errorType = "Danger";
+			//$registerError = "Något gick fel, vänligen försök igen";
+			$regsiterError = '<script type="text/javascript">alert("Registration failed, please try again!");</script>';
+		}
 	}
 ?>
 
