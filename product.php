@@ -1,7 +1,7 @@
 <?php
 	ob_start();
 	session_start();
-	require_once 'dbconnect.php';
+	include_once("dbconnect.php");
 	include_once("navigation.php");
 
 	// if admin presses the add product button
@@ -15,9 +15,9 @@
 		$description = $_POST['ProductDescription'];
 		$image = $_POST['ProductImage'];
 
-		// insert data into database
+		// insert product data into database
 		$query = "INSERT INTO Product(ProductName, ProductPrice, ProductStock, ProductSize, ProductDescription, ProductImage) VALUES('$name','$price','$stock','$size','$description','$image')";
-		$result = mysqli_query($link, $query);
+		$result = mysqli_query(connectionToDB(), $query);
 
 		// if insertion of product was succesful, open alert box with msg that it has been added, else open alert box with msg that something went wrong
 		if ($result) {
@@ -47,21 +47,21 @@
 
 		//  update data in database
 		$query = "UPDATE `Product` SET `ProductName`='$name', `ProductPrice`=$price, `ProductSize`='$size', `ProductStock`=$stock, `ProductDescription`='$description', `ProductImage`='$image' WHERE `ProductName`='$CurrentName'";
-		$result = mysqli_query($link, $query);
+		$result = mysqli_query(connectionToDB(), $query);
 
 		// if update was succesful, update prodcuts that are added to carts, , else open alert box with msg that something went wrong
 		if ($result) {
-			$getid = mysqli_query($link, "SELECT ProductID FROM Product WHERE ProductName='$name'");
+			$getid = mysqli_query(connectionToDB(), "SELECT ProductID FROM Product WHERE ProductName='$name'");
 			$productid = mysqli_fetch_array($getid, MYSQLI_ASSOC);
 			$getid2 = $productid['ProductID'];
-			$price = mysqli_query($link, "SELECT ProductPrice FROM Product WHERE ProductID ='$getid2'");
+			$price = mysqli_query(connectionToDB(), "SELECT ProductPrice FROM Product WHERE ProductID ='$getid2'");
 			$Row2 = mysqli_fetch_array($price, MYSQLI_ASSOC);
 			$price2 = $Row2['ProductPrice'];
-			$getquant = mysqli_query($link, "SELECT CartItemQuantity FROM CartItem WHERE Product_ProductID ='$getid2'");
+			$getquant = mysqli_query(connectionToDB(), "SELECT CartItemQuantity FROM CartItem WHERE Product_ProductID ='$getid2'");
 			$Row2 = mysqli_fetch_array($getquant, MYSQLI_ASSOC);
 			$quantity = $Row2['CartItemQuantity'];
 			$newprice = $price2*$quantity;
-			$updatecart = mysqli_query($link, "UPDATE CartItem SET CartItemPrice='$newprice' WHERE Product_ProductID = '$getid2'");
+			$updatecart = mysqli_query(connectionToDB(), "UPDATE CartItem SET CartItemPrice='$newprice' WHERE Product_ProductID = '$getid2'");
 
 			// if the cart update is successful, open alert box with msg that it is changed, else open alert box with msg that something went wrong
 			if($updatecart) {
@@ -79,15 +79,15 @@
 
 		// get data from the submited form
 		$name = $_POST['ProductName'];
-		$productid = mysqli_query($link, "SELECT ProductID FROM Product WHERE ProductName = '$name'");
+		$productid = mysqli_query(connectionToDB(), "SELECT ProductID FROM Product WHERE ProductName = '$name'");
 		$row = mysqli_fetch_array($productid, MYSQLI_ASSOC);
 		$productid = $row['ProductID'];
 
 		// Delete product from cartitem, orderitem and products
-		$delcart = mysqli_query($link, "DELETE FROM CartItem WHERE Product_ProductID = '$productid'");
-		$delorder = mysqli_query($link, "DELETE FROM OrderItem WHERE Product_ProductID = '$productid'");
+		$delcart = mysqli_query(connectionToDB(), "DELETE FROM CartItem WHERE Product_ProductID = '$productid'");
+		$delorder = mysqli_query(connectionToDB(), "DELETE FROM OrderItem WHERE Product_ProductID = '$productid'");
 		$query = "DELETE FROM Product WHERE ProductName='$name'";
-		$result = mysqli_query($link, $query);
+		$result = mysqli_query(connectionToDB(), $query);
 
 		// if delete was succesfull, open alert box with msg that it is removed, else open alert box with msg something went wrong.
 		if ($result) {
@@ -103,13 +103,13 @@
 
 		// get data from database
 		$user = $_SESSION['user'];
-		$cartid = mysqli_query($link, "SELECT CartID FROM Cart WHERE User_UserPSN ='$user'");
+		$cartid = mysqli_query(connectionToDB(), "SELECT CartID FROM Cart WHERE User_UserPSN ='$user'");
 		$Row = mysqli_fetch_array($cartid, MYSQLI_ASSOC);
 		$cartid2 = $Row['CartID'];
 		$productid = $_POST['product'];
 		$quantity = $_POST['Quantity'];
-		$checkcart = mysqli_query($link, "SELECT Product_ProductID, CartItemQuantity, CartItemPrice FROM CartItem WHERE Cart_CartID = '$cartid2'");
-		$price = mysqli_query($link, "SELECT ProductPrice, ProductStock FROM Product WHERE ProductID ='$productid'");
+		$checkcart = mysqli_query(connectionToDB(), "SELECT Product_ProductID, CartItemQuantity, CartItemPrice FROM CartItem WHERE Cart_CartID = '$cartid2'");
+		$price = mysqli_query(connectionToDB(), "SELECT ProductPrice, ProductStock FROM Product WHERE ProductID ='$productid'");
 		$Row2 = mysqli_fetch_array($price, MYSQLI_ASSOC);
 		$price2 = $Row2['ProductPrice'];
 		$stock = $Row2['ProductPrice'];
@@ -128,7 +128,7 @@
 					// check that the newquantity doesnt exceds the product quantity, if it doesnt update the item in the cart, else open alert box with msg that the stock isnt enough
 					if ($newquantity < $stock) {
 						$newprice = $newquantity * $price2;
-						$update = mysqli_query($link, "UPDATE `CartItem` SET `CartItemQuantity`='$newquantity', `CartItemPrice`='$newprice' WHERE `Cart_CartID` ='$cartid2' AND `Product_ProductID` ='$productid'");
+						$update = mysqli_query(connectionToDB(), "UPDATE `CartItem` SET `CartItemQuantity`='$newquantity', `CartItemPrice`='$newprice' WHERE `Cart_CartID` ='$cartid2' AND `Product_ProductID` ='$productid'");
 
 						// if update was succesful open alert box with msg that it worked, and break the loop since it can only be one of each productid in the cart
 						if ($update == 1) {
@@ -149,7 +149,7 @@
 			// Insert product into cartitem database
 			$price2 = $price2 * $quantity;
 			$query = "INSERT INTO CartItem (Product_ProductID, Cart_CartID, CartItemQuantity, CartItemPrice) VALUES ('$productid', '$cartid2', '$quantity', '$price2')";
-			$result = mysqli_query($link, $query);
+			$result = mysqli_query(connectionToDB(), $query);
 
 			// if succesful open alret box with succes msg, else open alert box with failure msg
 			if ($result) {
@@ -169,7 +169,7 @@
 		$rating = $_POST['ReviewRating']*1;
 		$comment = $_POST['ReviewComments'];
 		$productid2 = $_POST['productid']*1;
-		$checkcomment = mysqli_query($link, "SELECT ReviewID FROM `Review` WHERE `User_UserPSN` = '$user' AND `Product_ProductID` = $productid2");
+		$checkcomment = mysqli_query(connectionToDB(), "SELECT ReviewID FROM `Review` WHERE `User_UserPSN` = '$user' AND `Product_ProductID` = $productid2");
 		// Check if the user aldready rated and commented on this product
 		if (mysqli_num_rows($checkcomment) > 0) {
 			echo '<script type="text/javascript">alert("Remove your old comment if you want to add another one.");</script>';
@@ -177,7 +177,7 @@
 			// Insert data into Review table
 			$query = "INSERT INTO Review(User_UserPSN, Product_ProductID, ReviewRating, ReviewComments) VALUES ('$user',$productid2,$rating,'$comment')";
 			//$query = "INSERT INTO `Review` VALUES ('$user', '$productid2', '$rating', '$comment')";
-			$result = mysqli_query($link, $query);
+			$result = mysqli_query(connectionToDB(), $query);
 
 			// if the insert was not succesful open alertbox with failure msg
 			if (!$result) {
@@ -193,7 +193,7 @@
 		$Reviewid = $_POST['ReviewID'];
 
 		// delete Review from the Review table
-		$del = mysqli_query($link, "DELETE FROM Review WHERE ReviewID = '$Reviewid'");
+		$del = mysqli_query(connectionToDB(), "DELETE FROM Review WHERE ReviewID = '$Reviewid'");
 
 		// if delete was succesful open alert box with succes msg
 		if($del) {
@@ -222,29 +222,12 @@
 			// check if logged in
 			if(isset($_SESSION['user'])!="") {
 
-				error_reporting( ~E_DEPRECATED & ~E_NOTICE );
-
-				// Inputs to connect to our DB
-				define('DBHOST', 'localhost');
-				define('DBUSER', 'root');
-				define('DBPASS', 'core13');
-				define('DBNAME', 'box123db');
-
-				// Open connection to MySQL server
-				$link = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
-
-				// If connection fails, exit and display message
-				if ( !$link ) {
-					die("Connection failed : " . mysqli_error($link));
-				}
-
-				//$user = $_SESSION['user'];
 				// get data from User table in database
-				$admin = mysqli_query($link, "SELECT UserAdmin FROM User WHERE UserPSN ='$user'");
+				$admin = mysqli_query(connectionToDB(), "SELECT UserAdmin FROM User WHERE UserPSN='$user'");
 				$Row = mysqli_fetch_assoc($admin);
 
 				// check if the logged in user is admin or if user posted the comment/Review
-				if(($user == $_SESSION['user']) or ($Row['UserAdmin'] != 1)) { ?>
+				if($_SESSION['user'] == $user) { ?>
 					<!-- display the delete comment button -->
 					<form action="" method="post">
 						<input type="hidden" name="ReviewID" value="<?php echo $Reviewid; ?>">
@@ -291,24 +274,8 @@
 						<h5>Rating and comments</h5>
 						<?php
 
-						// Avoid mysql_connect() deprecation error
-						error_reporting( ~E_DEPRECATED & ~E_NOTICE );
-
-						// Inputs to connect to our DB
-						define('DBHOST', 'localhost');
-						define('DBUSER', 'root');
-						define('DBPASS', 'core13');
-						define('DBNAME', 'box123db');
-
-						// Open connection to MySQL server
-						$link = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
-
-						// If connection fails, exit and display message
-						if ( !$link ) {
-							die("Connection failed : " . mysqli_error($link));
-						}
 						// get Reviews from database and print them in comment box using the print_comments function
-						$Reviews = mysqli_query($link, "SELECT ReviewComments, ReviewRating, ReviewID, User_UserPSN FROM Review WHERE Product_ProductID = '$productid'");
+						$Reviews = mysqli_query(connectionToDB(), "SELECT ReviewComments, ReviewRating, ReviewID, User_UserPSN FROM Review WHERE Product_ProductID = '$productid'");
 						while ($Row = mysqli_fetch_array($Reviews, MYSQLI_ASSOC)) {
 							print_comments($Row['ReviewComments'], $Row['ReviewRating'], $Row['ReviewID'], $Row['User_UserPSN']);
 						}
@@ -353,24 +320,8 @@
 	//function for creating products
 	function create_product($productid, $image, $name, $size, $stock, $price, $description) {
 
-		// Avoid mysql_connect() deprecation error
-		error_reporting( ~E_DEPRECATED & ~E_NOTICE );
-
-		// Inputs to connect to our DB
-		define('DBHOST', 'localhost');
-		define('DBUSER', 'root');
-		define('DBPASS', 'core13');
-		define('DBNAME', 'box123db');
-
-		// Open connection to MySQL server
-		$link = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
-
-		// If connection fails, exit and display message
-		if ( !$link ) {
-			die("Connection failed : " . mysqli_error($link));
-		}
 		// get Review data from database
-		$result = mysqli_query($link, "SELECT AVG(ReviewRating) FROM Review WHERE `Product_ProductID` = '$productid'");
+		$result = mysqli_query(connectionToDB(), "SELECT AVG(ReviewRating) FROM Review WHERE `Product_ProductID` = '$productid'");
 		//$avgrating = mysql_result($result, 0) *1;
 		mysqli_data_seek($result, 0);
 		if( !empty($field) ) {
@@ -415,21 +366,11 @@
 	<?php } ?> <!-- ----------------END of create_product() -->
 
 	<div class="product-box">
-
 		<?php
-			$servername = "localhost";
-			$username = "root";
-			$password = "core13";
-			$dbname = "box123db";
+			$query = "SELECT ProductID, ProductName, ProductPrice, ProductSize, ProductStock, ProductDescription, ProductImage FROM Product";
+			$result2 = mysqli_query(connectionToDB(), $query);
 
-			$conn = new mysqli($servername, $username, $password, $dbname);
-
-			if ($conn->connect_error) {
-		    		die("Connection failed: " . $conn->connect_error);
-			}
-
-			$sql = "SELECT ProductID, ProductName, ProductPrice, ProductSize, ProductStock, ProductDescription, ProductImage FROM Product";
-			$result2 = $conn->query($sql);
+			// if there are any products in the database
 			if ($result2->num_rows > 0) {
 		    	while ($row = $result2->fetch_assoc()) {
 
@@ -437,7 +378,7 @@
 					create_product($row['ProductID'], $row['ProductImage'], $row['ProductName'], $row['ProductSize'], $row['ProductStock'], $row['ProductPrice'], $row['ProductDescription']);
 				}
 			}
-			$conn->close();
+			mysqli_close(connectionToDB());
 		?>
 	</div>
 
@@ -445,12 +386,11 @@
 	// check if someone is logged in
 	if(isset($_SESSION['user'])!="") {
 		$user = $_SESSION['user'];
-		$admin = mysqli_query($link, "SELECT UserAdmin FROM User WHERE UserPSN='$user'");
+		$admin = mysqli_query(connectionToDB(), "SELECT UserAdmin FROM User WHERE UserPSN='$user'");
 		$Row = mysqli_fetch_assoc($admin);
 
 		// check if logged in user is an admin
-		if ($Row['UserAdmin'] == 1) {
-	?>
+		if ($Row['UserAdmin'] == 1) {  ?>
 			<!-- display admin buttons for adding, editing and removing products -->
 			<div class="admin-product-settings">
 				<button onclick="document.getElementById('id01').style.display='block'" class="button-admin" name="btn-add-product" style="background-color: #4CAF50">Add product</button>

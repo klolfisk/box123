@@ -1,7 +1,7 @@
 <?php
 	ob_start();
 	session_start();
-	require_once 'dbconnect.php';
+	include_once("dbconnect.php");
 	include_once("navigation.php");
 
 	// function for printing the list of items added to cart
@@ -17,12 +17,12 @@
 	// if user presses the clear cart button
 	if (isset($_POST['cleancartbtn'])) {
 		$user=$_SESSION['user'];
-		$cartid = mysqli_query($link,"SELECT `CartID` FROM `Cart` WHERE `User_UserPSN` = '$user'");
+		$cartid = mysqli_query(connectionToDB(),"SELECT `CartID` FROM `Cart` WHERE `User_UserPSN` = '$user'");
 		$row = mysqli_fetch_array($cartid, MYSQLI_ASSOC);
 		$cartid = $row['CartID']*1;
 
 		// delete all cartitems in the users cart
-		mysqli_query($link, "DELETE FROM `CartItem` WHERE `Cart_CartID`='$cartid'");
+		mysqli_query(connectionToDB(), "DELETE FROM `CartItem` WHERE `Cart_CartID`='$cartid'");
 	}
 
 	// if user presses the order button
@@ -30,10 +30,10 @@
 		$user = $_SESSION['user'];
 
 		// get which cart is owned by user from database and get all the items that is added to users cart
-		$cartid = mysqli_query($link, "SELECT `CartID` FROM `Cart` WHERE `User_UserPSN` = '$user'");
+		$cartid = mysqli_query(connectionToDB(), "SELECT `CartID` FROM `Cart` WHERE `User_UserPSN` = '$user'");
 		$row = mysqli_fetch_array($cartid, MYSQLI_ASSOC);
 		$cartid = $row['CartID']*1;
-		$items = mysqli_query($link, "SELECT Product_ProductID, CartItemQuantity, CartItemPrice FROM CartItem WHERE Cart_CartID = '$cartid'");
+		$items = mysqli_query(connectionToDB(), "SELECT Product_ProductID, CartItemQuantity, CartItemPrice FROM CartItem WHERE Cart_CartID = '$cartid'");
 
 		// items is in cart
 		if ($items) {
@@ -42,19 +42,19 @@
 			$shipaddress = $_POST['OrderShipAddress'];
 			$zip = $_POST['OrderZip'];
 			$city = $_POST['OrderCity'];
-			$getdate = mysqli_query($link, "SELECT CURDATE()");
+			$getdate = mysqli_query(connectionToDB(), "SELECT CURDATE()");
 			$row = mysqli_fetch_array($getdate, MYSQLI_ASSOC);
 			$date = $row['CURDATE()'];
 
 			// insert data into order
 			$query = "INSERT INTO `Order`(`User_UserPSN`, `OrderShipAddress`, `OrderZip`, `OrderCity`, `OrderDate`) VALUES('$user','$shipaddress','$zip','$city','$date')";
-			$result = mysqli_query($link, $query);
+			$result = mysqli_query(connectionToDB(), $query);
 
 			// check if insert was succesful
 			if ($result) {
 
 				// get orderid from orders that are not shipped
-				$orderid = mysqli_query($link,"SELECT OrderID FROM `Order` WHERE User_UserPSN = '$user' AND OrderHandled = 0");
+				$orderid = mysqli_query(connectionToDB(),"SELECT OrderID FROM `Order` WHERE User_UserPSN = '$user' AND OrderHandled = 0");
 				$row = mysqli_fetch_array($orderid, MYSQLI_ASSOC);
 				$orderid = $row['OrderID'] * 1;
 
@@ -67,22 +67,22 @@
 
 					// Add the items to the order items table
 					$query = "INSERT INTO `OrderItem`(`Order_OrderID`, `Product_ProductID`, `OrderItemQuantity`, `OrderItemPrice`) VALUES($orderid, $productid, $quantity, $price)";
-					$result = mysqli_query($link, $query);
+					$result = mysqli_query(connectionToDB(), $query);
 
 					// update the stock in products
-					$prodstock = mysqli_query($link, "SELECT `ProductStock` FROM `Product` WHERE `ProductID` = '$productid'");
+					$prodstock = mysqli_query(connectionToDB(), "SELECT `ProductStock` FROM `Product` WHERE `ProductID` = '$productid'");
 					$stockrow = mysqli_fetch_array($prodstock, MYSQLI_ASSOC);
 					$stock = $stockrow['ProductStock'];
 					$newquantity = $stock - $quantity;
-					mysqli_query($link, "UPDATE `Product` SET `ProductStock` = '$newquantity' WHERE `ProductID` = '$productid' ");
+					mysqli_query(connectionToDB(), "UPDATE `Product` SET `ProductStock` = '$newquantity' WHERE `ProductID` = '$productid' ");
 				}
 
 				// if all items was succesfully added, delete the items from cartitem and set the order to shipped
 				if($result) {
-					mysqli_query($link, "DELETE FROM `CartItem` WHERE `Cart_CartID`='$cartid'");
-					mysqli_query($link, "UPDATE `Order` SET `OrderHandled` = 1 WHERE `User_UserPSN` = '$user'");
+					mysqli_query(connectionToDB(), "DELETE FROM `CartItem` WHERE `Cart_CartID`='$cartid'");
+					mysqli_query(connectionToDB(), "UPDATE `Order` SET `OrderHandled` = 1 WHERE `User_UserPSN` = '$user'");
 
-					$getorderid = mysqli_query($link, "SELECT `OrderID`, `OrderDate`, `OrderAddedToHistory` FROM `Order` WHERE `User_UserPSN` = '$user'");
+					$getorderid = mysqli_query(connectionToDB(), "SELECT `OrderID`, `OrderDate`, `OrderAddedToHistory` FROM `Order` WHERE `User_UserPSN` = '$user'");
 					while($row = mysqli_fetch_array($getorderid)) {
 						$orderid = $row['OrderID']*1;
 						$date = $row['OrderDate'];
@@ -91,19 +91,19 @@
 
 						// check if order is added to orderhistory
 						if ($history == 0) {
-							$items = mysqli_query($link, "SELECT OrderItemQuantity, Product_ProductID FROM OrderItem WHERE Order_OrderID = '$orderid'");
+							$items = mysqli_query(connectionToDB(), "SELECT OrderItemQuantity, Product_ProductID FROM OrderItem WHERE Order_OrderID = '$orderid'");
 
 							// if order is not added to orderhistory, add it to order history
 							while ($row2 = mysqli_fetch_array($items)) {
 								$quantity = $row2['OrderItemQuantity']*1;
 								$productid = $row2['Product_ProductID']*1;
-								$getname = mysqli_query($link, "SELECT ProductName FROM Product WHERE ProductID = '$productid'");
+								$getname = mysqli_query(connectionToDB(), "SELECT ProductName FROM Product WHERE ProductID = '$productid'");
 								$row3 = mysqli_fetch_array($getname);
 								$name = $row3['ProductName'];
-								mysqli_query($link, "INSERT INTO `OrderHistory`(Order_OrderID, OrderHistoryQuantity, OrderHistoryProductID, OrderHistoryDate, OrderHistoryName) VALUES($orderid, $quantity, $productid, '$date', '$name')");
+								mysqli_query(connectionToDB(), "INSERT INTO `OrderHistory`(Order_OrderID, OrderHistoryQuantity, OrderHistoryProductID, OrderHistoryDate, OrderHistoryName) VALUES($orderid, $quantity, $productid, '$date', '$name')");
 
 								// update so that the order is set to have been added to history
-								mysqli_query($link, "UPDATE `Order` SET `OrderAddedToHistory` = 1 WHERE `OrderID` = '$orderid' ");
+								mysqli_query(connectionToDB(), "UPDATE `Order` SET `OrderAddedToHistory` = 1 WHERE `OrderID` = '$orderid' ");
 							}
 						}
 					}
@@ -143,16 +143,16 @@
 					<?php
 					/* get data for printing the cart list */
 					$user = $_SESSION['user'];
-					$cartid = mysqli_query($link, "SELECT CartID FROM Cart WHERE User_UserPSN ='$user'");
+					$cartid = mysqli_query(connectionToDB(), "SELECT CartID FROM Cart WHERE User_UserPSN ='$user'");
 					$Row = mysqli_fetch_array($cartid, MYSQLI_ASSOC);
 					$cartid = $Row['CartID'];
-					$cartitems = mysqli_query($link, "SELECT Product_ProductID, CartItemQuantity, CartItemPrice FROM CartItem WHERE Cart_CartID = '$cartid'");
+					$cartitems = mysqli_query(connectionToDB(), "SELECT Product_ProductID, CartItemQuantity, CartItemPrice FROM CartItem WHERE Cart_CartID = '$cartid'");
 
 					/* print all the items in the cart */
 					if (mysqli_num_rows($cartitems) > 0) {
 	    						while ($Row = mysqli_fetch_array($cartitems, MYSQLI_ASSOC)) {
 									$productid = $Row['Product_ProductID'];
-									$productname = mysqli_query($link, "SELECT ProductName FROM Product WHERE ProductID = '$productid'");
+									$productname = mysqli_query(connectionToDB(), "SELECT ProductName FROM Product WHERE ProductID = '$productid'");
 									$Row2 = mysqli_fetch_array($productname);
 									create_cart_list($Row['Product_ProductID'],$Row['CartItemPrice'],$Row['CartItemQuantity'], $Row2['ProductName']);
 									$total = $Row['CartItemPrice'] + $total;
@@ -169,10 +169,10 @@
 		</div>
 		<?php
 			$user = $_SESSION['user'];
-			$cartcheck = mysqli_query($link, "SELECT CartID FROM Cart WHERE User_UserPSN = '$user'");
+			$cartcheck = mysqli_query(connectionToDB(), "SELECT CartID FROM Cart WHERE User_UserPSN = '$user'");
 			$CartRow = mysqli_fetch_array($cartcheck, MYSQLI_ASSOC);
 			$cartid = $CartRow['CartID'];
-			$cartitems = mysqli_query($link, "SELECT CartItemID FROM CartItem WHERE Cart_CartID = '$cartid'");
+			$cartitems = mysqli_query(connectionToDB(), "SELECT CartItemID FROM CartItem WHERE Cart_CartID = '$cartid'");
 
 			/* check if items in cart, and disaply buttons if true */
 			if (mysqli_num_rows($cartitems) > 0) { ?>

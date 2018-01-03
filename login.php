@@ -1,7 +1,7 @@
 <?php
 	ob_start();
 	session_start();
-	require_once 'dbconnect.php';
+	include_once("dbconnect.php");
 	include_once("navigation.php");
 
 	/* Doesn't let you open login page if session is set, doesn't let you log in if you're already logged in*/
@@ -23,7 +23,7 @@
 	    $Password = htmlspecialchars($Password);
 
 	    /*Check if user is registered and credentials are correct*/
-	    $result = mysqli_query($link, "SELECT UserPSN, UserPassword FROM User WHERE UserEmail = '$Email'");
+	    $result = mysqli_query(connectionToDB(), "SELECT UserPSN, UserPassword FROM User WHERE UserEmail = '$Email'");
 	    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 	    $validationCount = mysqli_num_rows($result); // If correct the return needs to be 1 row, otherwise multiple users
 

@@ -1,13 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Box123 - Orders</title>
+	<link rel="stylesheet" type="text/css" href="css/styling.css">
+</head>
+
 <?php
 	ob_start();
 	session_start();
-	require_once 'dbconnect.php';
+	include_once("dbconnect.php");
 	include_once("navigation.php");
 
 	/* Function for listing the orders of the users*/
 	function create_order_list($productid, $quantity, $date, $productname, $orderid, $shipped) {
 ?>
-
 		<tr>
 			<?php if ($id == FALSE) {?>
 			<td><?php echo $orderid?></td> <?php
@@ -29,16 +35,9 @@
 	}
 	if (isset($_POST['btn-send'])) {
 		$orderid = $_POST['OrderID'];
-		mysqli_query($link, "UPDATE `Order` SET `OrderShipped` = 1 WHERE `OrderID` = '$orderid'");
+		mysqli_query(connectionToDB(), "UPDATE `Order` SET `OrderShipped` = 1 WHERE `OrderID` = '$orderid'");
 	}
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Box123 - Orders</title>
-	<link rel="stylesheet" type="text/css" href="css/styling.css">
-</head>
 
 <body>
 	<div class="order-box">
@@ -64,15 +63,15 @@
 					<?php
 					/* Gets the current users PSN */
 					$user = $_SESSION['user'];
-					$checkadmin = mysqli_query($link, "SELECT UserAdmin FROM User WHERE UserPSN = '$user'");
+					$checkadmin = mysqli_query(connectionToDB(), "SELECT UserAdmin FROM User WHERE UserPSN = '$user'");
 					$rad = mysqli_fetch_array($checkadmin, MYSQLI_ASSOC);
 					$admin = $rad['UserAdmin'];
 					if($admin == "1") {
 						/* If the user has admin privleges, display all order placed*/
-						$order = mysqli_query($link, "SELECT `OrderID`, `OrderShipped` FROM `Order`");
+						$order = mysqli_query(connectionToDB(), "SELECT `OrderID`, `OrderShipped` FROM `Order`");
 					} else {
 						/* Gets the order id that belongs to the current user*/
-						$order = mysqli_query($link, "SELECT `OrderID`, `OrderShipped` FROM `Order` WHERE `User_UserPSN` ='$user'");
+						$order = mysqli_query(connectionToDB(), "SELECT `OrderID`, `OrderShipped` FROM `Order` WHERE `User_UserPSN` ='$user'");
 					}
 
 
@@ -81,7 +80,7 @@
 						$orderid = $Row['OrderID'];
 						$shipped = $Row['OrderShipped'];
 						/* Gets the data that is to be displayed in the order table */
-						$orderinfo = mysqli_query($link, "SELECT `OrderHistoryQuantity`, `OrderHistoryProductID`, `OrderHistoryDate`, `OrderHistoryName` FROM `OrderHistory` WHERE `Order_OrderID` = '$orderid'");
+						$orderinfo = mysqli_query(connectionToDB(), "SELECT `OrderHistoryQuantity`, `OrderHistoryProductID`, `OrderHistoryDate`, `OrderHistoryName` FROM `OrderHistory` WHERE `Order_OrderID` = '$orderid'");
 						/* Checks if the number of rows in the recieved query result is greater than 0, which means there's data to be displayed */
 						if (mysqli_num_rows($orderinfo) > 0) {
 								/* Adds wanted data to the displayed order table */
@@ -97,7 +96,7 @@
 			/* check if someone is logged in */
 			if(isset($_SESSION['user'])!="") {
 				$user = $_SESSION['user'];
-				$admin = mysqli_query($link, "SELECT UserAdmin FROM User WHERE UserPSN='$user'");
+				$admin = mysqli_query(connectionToDB(), "SELECT UserAdmin FROM User WHERE UserPSN='$user'");
 				$Row = mysqli_fetch_array($admin);
 
 				/* check if logged in user is and admin */
