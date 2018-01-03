@@ -10,7 +10,7 @@
 
 	/* Open connection to MySQL server */
 	$link = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
-	
+
 	/* If connection fails, exit and display message*/
 	if ( !$link ) {
 		die("Connection failed : " . mysqli_error($link));
