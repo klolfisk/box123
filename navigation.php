@@ -12,8 +12,8 @@
 		<?php if(!isset($_SESSION['user'])) { ?>
 			<a href="index.php">Home</a>
 			<a href="product.php">Products</a>
-			<a id="navRightFloat" href="register.php">Register</a>
 			<a id="navRightFloat" href="login.php">Log in</a>
+			<a id="navRightFloat" href="register.php">Register</a>
 			<a class="icon" href="javascript:void(0);" style="font-size:15px;" onclick="topNavResponsive()">&#9776;</a>
 
 		<!-- Navigation bar if logged in -->
@@ -21,8 +21,8 @@
 			<a href="index.php">Home</a>
 			<a href="product.php">Products</a>
 			<a href="cart.php">Shopping cart</a>
-			<a id="navRightFloat" href="order.php">Orders</a>
 			<a id="navRightFloat" href="logout.php?logout">Log out</a>
+			<a id="navRightFloat" href="order.php">Orders</a>
 			<a class="icon" href="javascript:void(0);" style="font-size:15px;" onclick="topNavResponsive()">&#9776;</a>
 		<?php } ?>
 	</nav>
