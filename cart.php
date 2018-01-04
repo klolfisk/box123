@@ -190,7 +190,7 @@
 			<form method="post" class="modal-content" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
 	    		<div class="container">
 	      			<label><b>Address:</b></label>
-	      			<input type="text" placeholder="Skriv in adress" name="OrderShipAddress" value="<?php echo $shipaddress; ?>" pattern="[a-ö0-9A-Ö\s]+" title="Kan bara innehålla små, stora bokstäver samt siffror." required>
+	      			<input type="text" placeholder="Skriv in adress" name="OrderShipAddress" value="<?php echo $shipaddress; ?>" pattern="[a-ö0-9A-Ö\s]+" title="Kan bara innehålla små, stora bokstäver samt siffror." required autofocus>
 
 	      			<label><b>Zip code:</b></label>
 	      			<input type="text" placeholder="Skriv in zip kod" name="OrderZip" value="<?php echo $zip; ?>"  pattern="[0-9]{5}" required>

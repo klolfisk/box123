@@ -119,7 +119,7 @@
 	    		<div class="container">
 				<?php unset($orderid); ?>
 	      			<label><b>Order ID:</b></label>
-	      			<input type="text" placeholder="Skriv in order id" name="OrderID" value="<?php echo $orderid; ?>" required>
+	      			<input type="text" placeholder="Skriv in order id" name="OrderID" value="<?php echo $orderid; ?>" required autofocus>
 
 	        		<!-- add product button -->
 	      			<button type="submit" name="btn-send" class="addproductbtn" >Mark order as sent</button>

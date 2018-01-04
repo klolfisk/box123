@@ -299,7 +299,7 @@
 			<form method="post" class="modal-content" action="" autocomplete="off">
     			<div class="container">
       				<label><b>Rating:</b></label>
-      				<input type="number" placeholder="Skriv in betyg (1-5)" name="ReviewRating" value="<?php echo $rating; ?>" min="1" max="5" required>
+      				<input type="number" placeholder="Skriv in betyg (1-5)" name="ReviewRating" value="<?php echo $rating; ?>" min="1" max="5" required autofocus>
 
       				<label><b>Comment:</b></label>
       				<input type="text" placeholder="Skriv in kommentar" name="ReviewComments" value="<?php echo $comment; ?>" maglength="150">
@@ -407,7 +407,7 @@
 		<form method="post" class="modal-content" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" accept-charset="ISO-8859-1" autocomplete="off">
 	    	<div class="container">
 	      		<label><b>Name:</b></label>
-	      		<input type="text" placeholder="Name of the product" name="ProductName" value="<?php echo $name; ?>" required>
+	      		<input type="text" placeholder="Name of the product" name="ProductName" value="<?php echo $name; ?>" required autofocus>
 
 	      		<label><b>Size:</b></label>
 	      		<input type="text" placeholder="Size of the product(ex. 10x10x10)" name="ProductSize" value="<?php echo $size; ?>" required>
@@ -438,7 +438,8 @@
 		<form method="post" class="modal-content" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" accept-charset="ISO-8859-1" autocomplete="off">
 	    	<div class="container">
 	      		<label><b>Current name:</b></label>
-				<input type="text" placeholder="Enter current product name" name="ProductCurrentName" value="<?php echo $name; ?>" required>
+				<input type="text" placeholder="Enter current product name" name="ProductCurrentName" value="<?php echo $name; ?>" required autofocus>
+
 	      		<label><b>New name:</b></label>
 	      		<input type="text" placeholder="Enter new name of product" name="ProductName" value="<?php echo $name; ?>" required>
 
@@ -471,7 +472,7 @@
 		<form method="post" class="modal-content" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" accept-charset="ISO-8859-1" autocomplete="off">
 	    	<div class="container">
 	      		<label><b>Name:</b></label>
-				<input type="text" placeholder="Enter the name of the product" name="ProductName" value="<?php echo $name; ?>" required>
+				<input type="text" placeholder="Enter the name of the product" name="ProductName" value="<?php echo $name; ?>" required autofocus>
 
 	        		<!-- remove product button -->
 	      		<button type="submit" name="btn-remove" class="addproductbtn" style="background-color: gray">Remove product</button>

@@ -50,7 +50,7 @@
 		<div class="login-box">
 			<div class="container">
 				<label><b>Email</b></label>
-				<input type="Email" name="Email" placeholder="Enter your email" maxlength="45" value="<?php echo $Email; ?>" pattern="[a-z0-9A-Z._%+-]+@[a-z0-9A-Z.-]+\.[a-z]{2,3}$" title="Example@example.com" required>
+				<input type="Email" name="Email" placeholder="Enter your email" maxlength="45" value="<?php echo $Email; ?>" pattern="[a-z0-9A-Z._%+-]+@[a-z0-9A-Z.-]+\.[a-z]{2,3}$" title="Example@example.com" required autofocus>
 
 	      		<label><b>Password</b></label>
 				<input type="Password" name="Password" placeholder="Enter your password" maxlength="45" required>

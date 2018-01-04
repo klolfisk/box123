@@ -68,7 +68,7 @@
 			<div class="container">
 				<!-- Get inputs for registration -->
 				<label><b>Name</b></label>
-				<input type="Name" name="Name" placeholder="Enter your name (ex. John Doe)" maxlength="45" value="<?php echo $Name; ?>" pattern="[a-zA-Z\s]+" title="Förnamn och efternamn" required>
+				<input type="Name" name="Name" placeholder="Enter your name (ex. John Doe)" maxlength="45" value="<?php echo $Name; ?>" pattern="[a-zA-Z\s]+" title="Förnamn och efternamn" required autofocus>
 
 				<label><b>Personal number</b></label>
 				<input type="PSN" name="PSN" placeholder="Enter in format (YYYYMMDDXXXX)" maxlength="45" value="<?php echo $PSN; ?>" pattern="[0-9]{12}" title="YYYYMMDDXXXX" required>
