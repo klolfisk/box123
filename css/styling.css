@@ -109,7 +109,7 @@ button {
 .product-container {
 	cursor: pointer;
     padding-bottom: 2%;
-	border: 1px solid #888888;
+	/*border: 1px solid #888888;*/
 	background-color: #FFFFFF;
 	width: 33.33%;
 	height: 60%;
@@ -117,6 +117,7 @@ button {
 	margin-bottom: 0;
 	font-family: Arial, Helvetica, sans-serif;
     float: left;
+	text-align: center;
 }
 
 /* Product image container */
@@ -155,7 +156,7 @@ img {
     margin-bottom: 1%;
 	width: 86%;
 	height: 5%;
-    overflow-x: scroll;
+    /*overflow-x: scroll;*/
 }
 
 @media screen and (max-width: 800px) {
