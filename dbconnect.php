@@ -1,10 +1,10 @@
 <?php
 	function connectionToDB() {
 		/* Inputs to connect to our DB */
-		define('DBHOST', 'localhost');
-		define('DBUSER', 'root');
-		define('DBPASS', 'core13');
-		define('DBNAME', 'box123db');
+		define('DBHOST', '');
+		define('DBUSER', '');
+		define('DBPASS', '');
+		define('DBNAME', '');
 
 		/* Open connection to MySQL server */
 		$link = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
